@@ -4,13 +4,10 @@
 
 <div class="card m-2">
 	<div class="card-header">
-		프로젝트 생성 및 실행
+		로그인 결과
 	</div>
 	<div class="card-body">
-		1. STS 설치 <br/>
-		2. 플러그인 설치 <br/>
-		3. 프로젝트 생성 <br/>
-		4. 프로젝트 설정 <br/>
+		<a class="btn btn-success btn-sm" href="/">홈으로 가기</a>
 	</div>
 </div>
 
