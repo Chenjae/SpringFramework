@@ -20,6 +20,7 @@
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
+	<!-- 리턴 값을 내부 리소스 경로로 해석, 앞과 뒤에 prefix와 suffix를 붙인다 -->
 	
 	<context:component-scan base-package="com.mycompany.webapp" />
 	
