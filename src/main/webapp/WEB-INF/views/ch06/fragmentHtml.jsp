@@ -1,0 +1,1 @@
+<img src="${pageContext.request.contextPath}/resources/images/photo1.jpg" width="200px"/>

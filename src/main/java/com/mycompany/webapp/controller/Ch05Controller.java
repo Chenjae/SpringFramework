@@ -203,8 +203,8 @@ public class Ch05Controller {
 		Jws<Claims> jws = parser.parseClaimsJws(jwt);
 		Claims claims = jws.getBody();
 		String userid = claims.get("userid", String.class); //데이터 타입을 같이 명시
-		String useremail = claims.get("useremail", String.class);;
-		String username = claims.get("username", String.class);;
+		String useremail = claims.get("useremail", String.class);
+		String username = claims.get("username", String.class);
 		
 		logger.info("userid : " + userid);
 		logger.info("useremail : " + useremail);
