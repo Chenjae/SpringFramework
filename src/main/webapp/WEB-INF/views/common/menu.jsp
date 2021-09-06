@@ -1,3 +1,5 @@
+<%@ page contentType="text/html; charset=UTF-8"%>
+
 <ul class="nav flex-column">
    <li class="nav-item mb-2">
       <h6 class="text-white"> 
@@ -35,24 +37,34 @@
       <a class="text-white" href="${pageContext.request.contextPath}/ch06/content">Controller/Forward & Redirect</a>
    	  </h6>
    </li>
-      <li class="nav-item mb-2">
+   <li class="nav-item mb-2">
       <h6 class="text-white"> 
       <span class="mr-2">Ch07.</span>
       <a class="text-white" href="${pageContext.request.contextPath}/ch07/content">Controller/Data Delivery</a>
    	  </h6>
    </li>
-   </li>
-      <li class="nav-item mb-2">
+   <li class="nav-item mb-2">
       <h6 class="text-white"> 
       <span class="mr-2">Ch08.</span>
       <a class="text-white" href="${pageContext.request.contextPath}/ch08/content">Controller/Session Support</a>
    	  </h6>
    </li>
-   </li>
-      <li class="nav-item mb-2">
+   <li class="nav-item mb-2">
       <h6 class="text-white"> 
       <span class="mr-2">Ch09.</span>
       <a class="text-white" href="${pageContext.request.contextPath}/ch09/content">Controller/FileUpload & FileDownload</a>
+   	  </h6>
+   </li>
+   <li class="nav-item mb-2">
+      <h6 class="text-white"> 
+      <span class="mr-2">Ch10.</span>
+      <a class="text-white" href="${pageContext.request.contextPath}/ch10/content">Controller/Execution Handling</a>
+   	  </h6>
+   </li>
+   <li class="nav-item mb-2">
+      <h6 class="text-white"> 
+      <span class="mr-2">Ch11.</span>
+      <a class="text-white" href="${pageContext.request.contextPath}/ch11/content">View/Spring Tag Library</a>
    	  </h6>
    </li>
 </ul>

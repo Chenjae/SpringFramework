@@ -18,7 +18,7 @@
 			</div>
 		</div>
 		
-		<div class="card">
+		<div class="card mt-2">
 			<div class="card-header">
 				EL(Expressions Language)
 			</div>
@@ -29,7 +29,7 @@
 			</div>
 		</div>
 		
-		<div class="card">
+		<div class="card mt-2">
 			<div class="card-header">
 				JSTL(Java Standard Tag Library) : 조건처리, 반복처리
 			</div>
@@ -39,7 +39,7 @@
 			</div>
 		</div>
 		
-		<div class="card">
+		<div class="card mt-2">
 			<div class="card-header">
 				@ModelAttribute를 이용해서 데이터 전달
 			</div>
@@ -49,7 +49,7 @@
 			</div>
 		</div>
 		
-		<div class="card">
+		<div class="card mt-2">
 			<div class="card-header">
 				@ModelAttribute를 이용해서 매개 변수 값 전달
 			</div>

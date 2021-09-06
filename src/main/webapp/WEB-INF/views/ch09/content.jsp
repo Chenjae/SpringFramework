@@ -71,7 +71,7 @@
 			</script>
 		</div>
 		
-		<div class="card">
+		<div class="card mt-2">
 			<div class="card-header">
 				FileUpload & FileDownload
 			</div>
