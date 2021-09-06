@@ -1,4 +1,3 @@
-<%@ page contentType="text/html; charset=UTF-8"%>
 <ul class="nav flex-column">
    <li class="nav-item mb-2">
       <h6 class="text-white"> 
@@ -40,6 +39,20 @@
       <h6 class="text-white"> 
       <span class="mr-2">Ch07.</span>
       <a class="text-white" href="${pageContext.request.contextPath}/ch07/content">Controller/Data Delivery</a>
+   	  </h6>
+   </li>
+   </li>
+      <li class="nav-item mb-2">
+      <h6 class="text-white"> 
+      <span class="mr-2">Ch08.</span>
+      <a class="text-white" href="${pageContext.request.contextPath}/ch08/content">Controller/Session Support</a>
+   	  </h6>
+   </li>
+   </li>
+      <li class="nav-item mb-2">
+      <h6 class="text-white"> 
+      <span class="mr-2">Ch09.</span>
+      <a class="text-white" href="${pageContext.request.contextPath}/ch09/content">Controller/FileUpload & FileDownload</a>
    	  </h6>
    </li>
 </ul>
