@@ -10,19 +10,19 @@
 		<form:form method="post" modelAttribute="member">
 		  <div class="form-group">
 		    <label for="mid">ID</label>
-		    <form:input type="text" class="form-control" id="mid" path="mid"/>
+		    <form:input type="text" class="form-control" path="mid"/>
 		  </div>
 		  <div class="form-group">
 		    <label for="mname">Name</label>
-		    <form:input type="text" class="form-control" id="mname" path="mname"/>
+		    <form:input type="text" class="form-control" path="mname"/>
 		  </div>
 		  <div class="form-group">
 		    <label for="mpassword">Password</label>
-		    <form:password class="form-control" id="mpassword" path="mpassword"/>
+		    <form:password class="form-control" path="mpassword"/>
 		  </div>
 		  <div class="form-group">
 		    <label for="mnation">Nation</label>
-		    <form:input type="text" class="form-control" id="mnation" path="mnation"/>
+		    <form:input type="text" class="form-control" path="mnation"/>
 		  </div>
 		  <button type="submit" class="btn btn-primary">Submit</button>
 		</form:form>

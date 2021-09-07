@@ -10,19 +10,17 @@
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
 	<!-- Enables the Spring MVC @Controller programming model -->
+	<!-- Annotation을 사용하겠다. 이 것을 명시한 위치에서 객체를 생성(dispatcher) -->
+	<!-- xmln뒤에 :"별칭", "별칭"이 없을 경우에는 태그사용시 그냥 사용할 수 있다 (현재 mvc) -->
 	<annotation-driven />
 
-	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
-	<resources mapping="/resources/**" location="/resources/" />
-
-	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
-	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<beans:property name="prefix" value="/WEB-INF/views/" />
-		<beans:property name="suffix" value=".jsp" />
-	</beans:bean>
-	<!-- 리턴 값을 내부 리소스 경로로 해석, 앞과 뒤에 prefix와 suffix를 붙인다 -->
 	
-	<context:component-scan base-package="com.mycompany.webapp" />
+
+	<!-- 이 경로 하위의 모든 패키지를 검색 (Annotation을 찾을 시작 패키지) -->
+	<context:component-scan base-package="com.mycompany.webapp">
+		<context:include-filter type="annotation" expression="org.springframework.streotype.Service"/>
+		<context:include-filter type="annotation" expression="org.springframework.streotype.Repository"/>
+	</context:component-scan>
 	
 	
 	

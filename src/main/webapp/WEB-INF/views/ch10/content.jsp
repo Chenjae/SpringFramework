@@ -38,8 +38,6 @@
 				<a href="handlingException6" class="btn btn-danger btn-sm">예외 처리6</a>				
 			</div>
 		</div>
-		
-		
 	</div>
 </div>
 

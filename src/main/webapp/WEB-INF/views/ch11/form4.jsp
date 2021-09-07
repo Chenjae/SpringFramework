@@ -4,7 +4,7 @@
 
 <div class="card m-2">
 	<div class="card-header">
-		DTO 객체의 필드값을 양식의 드롭다운 리스트(checkbox 태그)로 세팅
+		DTO 객체의 필드값을 양식의 드롭다운 리스트(radio 태그)로 세팅
 	</div>
 	<div class="card-body">
 		<div class="card">
@@ -12,16 +12,13 @@
 				forEach를 이용
 			</div>
 			<div class="card-body">
-				<form method="post" action="form3">
+				<form method="post" action="form4">
 					<div>
-						<c:forEach var="language" items="${languageList}" varStatus="status">
+						<c:forEach var="job" items="${jobList}" varStatus="status">
 							<span>
-							  <input type="checkbox" 
-								  id="lang${status.count}" name="mlanguage" value="${language}"
-								  	<c:forEach var="temp" items="${member.mlanguage}">
-								  		<c:if test="${temp == language}">checked</c:if>
-								  	</c:forEach>>
-							  <label for="lang${status.count}">${language}</label>
+							  <input type="radio" id="lang${status.count}" name="mjob" value="${job}"
+								  		<c:if test="${member.mjob == job}">checked</c:if>/>
+							  <label for="lang${status.count}">${job}</label>
 							</span>
 						</c:forEach> 
 					</div>
@@ -35,16 +32,16 @@
 				Spring 태그를 이용
 			</div>
 			<div class="card-body">
-				<form:form modelAttribute="member" method="post" action="form3">
+				<form:form modelAttribute="member" method="post" action="form4">
 					<div>
-						<form:checkboxes items="${languageList}" path="mlanguage"/>
+						<form:radiobuttons items="${jobList}" path="mjob"/>
 					</div>
 					<button class="btn btn-info btn-sm">제출</button>
 				</form:form>
 				<hr/>
-				<form:form modelAttribute="member" method="post" action="form3" class="mt-2">
+				<form:form modelAttribute="member" method="post" action="form4" class="mt-2">
 					<div>
-						<form:checkboxes items="${skillList}" path="mskill" 
+						<form:radiobuttons items="${cityList}" path="mcity" 
 											itemValue="code" itemLabel="label"/>
 					</div>
 					<button class="btn btn-info btn-sm">제출</button>
