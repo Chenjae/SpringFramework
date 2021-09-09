@@ -18,8 +18,8 @@
 
 	<!-- 이 경로 하위의 모든 패키지를 검색 (Annotation을 찾을 시작 패키지) -->
 	<context:component-scan base-package="com.mycompany.webapp">
-		<context:include-filter type="annotation" expression="org.springframework.streotype.Service"/>
-		<context:include-filter type="annotation" expression="org.springframework.streotype.Repository"/>
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service"/>
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
 	</context:component-scan>
 	
 	

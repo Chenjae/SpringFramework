@@ -4,7 +4,7 @@
 
 <div class="card m-2">
 	<div class="card-header">
-		DTO 객체(Command Object)와 폼 연결
+		DTO 객체(Command Object)와 폼   연결
 	</div>
 	<div class="card-body">
 		<form:form method="post" modelAttribute="member">

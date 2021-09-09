@@ -1,10 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 	
+	<!-- 기본 생성자로 객체를 생성 
 	<bean id="ch13Service1" class="com.mycompany.webapp.service.Ch13Service1"/>
-	<bean id="ch13BoardDao1" class="com.mycompany.webapp.dao.Ch13BoardDao1"/>
+	-->
+	
+	<!-- 생성자 주입 -->
+	<!-- Bean 생성 순서는 상관이 없다. 
+	<bean id="ch13Service1" class="com.mycompany.webapp.service.Ch13Service1">
+		<constructor-arg ref="ch13BoardDao1"></constructor-arg>
+	</bean>
+	-->
+	 
+	<!-- Setter 주입 -->
+	<!-- property name = Setter명, ref = 넣을 객체 -->
+	<!-- 
+	<bean id="ch13Service1" class="com.mycompany.webapp.service.Ch13Service1">
+		<property name="ch13BoardDao1" ref="ch13BoardDao1"/>
+	</bean>
+	 위의 코드를 아래와 같이 작성할 수도 있다
+	 Namespaces에서 p tag를 추가한다
+	 -->
+	<bean id="ch13Service1" class="com.mycompany.webapp.service.Ch13Service1"
+		p:ch13BoardDao1-ref="ch13BoardDao1"/>
 	
 
+	<!-- lazy-init : 생성 지연, 사용할 때 생성 -->
+	<!-- bean 전체에 적용 : <beans default-lazy-init="true" -->
+	<bean id="ch13BoardDao1" class="com.mycompany.webapp.dao.Ch13BoardDao1"/>
+
+
+	<!-- Properties 값 관리 설정 -->
+	<!-- classpath: main/resources, src/main/java -->
+	<context:property-placeholder location="classpath:properties/*.properties"/>
+	
+	<!-- Properties 값 주입 -->
+	<!-- ch13Service5에 기본 생성자가 없기 때문에 constructor-arg를 지정 -->
+	<!-- index : 생성자 매개변수 순서 -->
+	<!-- value : 생성자 매개 값, property-placeholder에서 관리하는 key에 해당하는 값이 대입된다. -->
+	<bean id="ch13Service5" class="com.mycompany.webapp.service.Ch13Service5">
+		<constructor-arg index="0" value="${service.prop1}"/>
+		<constructor-arg index="1" value="${service.prop2}"/>
+		<property name="prop3" value="${service.prop3}"/>
+	</bean>
+
+	
 </beans>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+<!-- Controller에 관련된 DI XML -->
+	<!-- Spring은 동일한 이름의 동일한 객체를 두 개이상 만들지 않는다. 싱글톤패턴 -->
+	<!-- property name = Setter명, ref = 넣을 객체 (root에서 정의한 name) -->
+	<!-- Root에 만들어진 객체는 모든 Dispatcher Servlet에서 공유 -->
+	<bean id="ch13Controller" class="com.mycompany.webapp.controller.Ch13Controller">
+		<property name="ch13Service1" ref="ch13Service1"></property>
+	</bean>
+	
+
+</beans>

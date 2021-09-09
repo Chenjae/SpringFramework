@@ -87,10 +87,10 @@ public class Ch08Controller {
 		logger.info("실행");
 		
 		//방법 1 : sessionMid만 제거
-		session.removeAttribute("sessionMid");
+		//session.removeAttribute("sessionMid");
 		
 		//방법 2 : session을 무효화, 세션에 저장된 모든 데이터를 제거
-		//session.invalidate();
+		session.invalidate();
 		
 		return "redirect:/ch08/content";
 	}
