@@ -119,6 +119,7 @@
 						}).done((data) => {
 							if(data.result === "success") {
 								window.location.reload();
+								console.log("성공");
 							}
 						});
 					}

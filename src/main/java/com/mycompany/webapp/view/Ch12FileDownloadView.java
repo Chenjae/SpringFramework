@@ -42,15 +42,29 @@ public class Ch12FileDownloadView extends AbstractView {
 			originalFilename = new String(originalFilename.getBytes("UTF-8"), "ISO-8859-1");
 		}
 		
+		//파일을 첨부로 다운로드하도록 설정
 		response.setHeader("Content-Disposition", "attachment; filename=\""+ originalFilename +"\""); //원래이름
 		
 		String filePath = "C:/hyundai_it&e/upload_files/" + savedName;
 		InputStream is = new FileInputStream(filePath);
+		
+		//응답 바디에 출력하는 출력스트림
 		OutputStream os = response.getOutputStream();
 		
-		FileCopyUtils.copy(is, os);
+		//byte의 길이를 줄 수 없다
+		//FileCopyUtils.copy(is, os);
+		
+		//전송 단위 (byte)를 설정
+		byte[] data = new byte[1024];
+		int readByteNum = -1;
+		while(true) {
+			readByteNum = is.read(data);
+			if(readByteNum == -1) break;
+			os.write(data, 0, readByteNum);
+			os.flush();
+		}
+		
 		is.close();
-		os.flush();
 		os.close();
 	}
 	
