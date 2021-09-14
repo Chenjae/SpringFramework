@@ -16,15 +16,16 @@ public class Ch14MemberService {
 	
 	//비즈니스 로직 결과 반환을 위한 enum 선언
 	public enum JoinResult {
-		SUCESS,
+		SUCCESS,
 		FAIL,
 		DUPLICATED
 	}
 	
 	public enum LoginResult {
-		SUCESS,
+		SUCCESS,
 		FAIL,
-		WRONG_PASS
+		WRONG_PASS,
+		WRONG_ID
 	}
 	
 	//비즈니스 로직 결과 반환을 위한 상수 선언
@@ -59,7 +60,7 @@ public class Ch14MemberService {
 			//DB에 회원 정보를 저장
 			try {
 				memberDao.insert(member);
-				return JoinResult.SUCESS;
+				return JoinResult.SUCCESS;
 			} catch (Exception e) {
 				e.printStackTrace();
 				return JoinResult.FAIL;
@@ -73,12 +74,16 @@ public class Ch14MemberService {
 		logger.info("실행");
 		
 		try {
-			Ch14Member loginedMember = memberDao.login(member);
-
+			Ch14Member loginedMember = memberDao.selectByMid(member.getMid());
+			
 			if(loginedMember == null) {
-				return LoginResult.WRONG_PASS;
+				return LoginResult.WRONG_ID;
 			} else {
-				return LoginResult.SUCESS;
+				if(loginedMember.getMpassword().equals(member.getMpassword())) {
+					return LoginResult.SUCCESS;
+				} else {
+					return LoginResult.WRONG_PASS;
+				}
 			}
 		} catch(Exception e) {
 			return LoginResult.FAIL;

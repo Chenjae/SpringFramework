@@ -3,5 +3,7 @@
 <configuration>
 	<typeAliases>
 		<typeAlias alias="member" type="com.mycompany.webapp.dto.Ch14Member"/>
+		<typeAlias alias="board" type="com.mycompany.webapp.dto.Ch14Board"/>
+		<typeAlias alias="pager" type="com.mycompany.webapp.dto.Pager"/>
 	</typeAliases>
 </configuration>

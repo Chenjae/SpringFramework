@@ -7,11 +7,7 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 	
-	<!-- @Service, @Repository가 적용된 클래스만 객체로 관리 -->
-	<!-- base-package 이하의 모든 패키지, use-default-filters="false" defalut 기능(전체 어노테이션 생성)을 꺼버린다 -->
-	<context:component-scan base-package="com.mycompany.webapp" use-default-filters="false">
-		<context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/>
-		<context:include-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
-	</context:component-scan>
-	
+	<!-- @Mapper -->
+	<mybatis-spring:scan base-package="com.mycompany.webapp.dao"/>
+
 </beans>

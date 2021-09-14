@@ -15,7 +15,10 @@
 	
 	<!-- Application Loggers -->
 	<logger name="com.mycompany.webapp">
-    <level value="info" />
+    	<level value="info" />
+	</logger>
+	<logger name="jdbc.sqltiming">
+	    <level value="info" />
 	</logger>
 
 	<!-- Root Logger -->

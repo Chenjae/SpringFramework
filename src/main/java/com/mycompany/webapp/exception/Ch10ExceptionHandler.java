@@ -43,6 +43,7 @@ public class Ch10ExceptionHandler {
 	@ExceptionHandler
 	public String handleException(Exception e) {
 		logger.info("실행");
+		e.printStackTrace();
 		return "error/500";
 	}
 }
