@@ -95,7 +95,7 @@
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
 			<version>4.0.1</version>
-			<scope>provided</scope>
+			<scope>provided</scope> <!-- 최종 산출물에는 반영되지 않으며 WAS가 제공해주는 걸 사용 -->
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet.jsp</groupId>
@@ -156,7 +156,6 @@
 		    <groupId>org.projectlombok</groupId>
 		    <artifactId>lombok</artifactId>
 		    <version>1.18.20</version>
-		    <scope>provided</scope>
 		</dependency>
 		
 		<!-- JDBC -->
@@ -196,6 +195,13 @@
 		    <groupId>com.googlecode.log4jdbc</groupId>
 		    <artifactId>log4jdbc</artifactId>
 		    <version>1.2</version>
+		</dependency>
+		
+		<!-- AOP -->
+		<dependency>
+		    <groupId>org.aspectj</groupId>
+		    <artifactId>aspectjweaver</artifactId>
+		    <version>1.9.4</version>
 		</dependency>
 		 
 	</dependencies>

@@ -31,18 +31,12 @@
 	
 
 	<!-- lazy-init : 생성 지연, 사용할 때 생성 -->
-	<!-- bean 전체에 적용 : <beans default-lazy-init="true" -->
 	<bean id="ch13BoardDao1" class="com.mycompany.webapp.dao.Ch13BoardDao1"/>
 
 
-	<!-- Properties 값 관리 설정 -->
-	<!-- classpath: main/resources, src/main/java -->
 	<context:property-placeholder location="classpath:properties/*.properties"/>
 	
 	<!-- Properties 값 주입 -->
-	<!-- ch13Service5에 기본 생성자가 없기 때문에 constructor-arg를 지정 -->
-	<!-- index : 생성자 매개변수 순서 -->
-	<!-- value : 생성자 매개 값, property-placeholder에서 관리하는 key에 해당하는 값이 대입된다. -->
 	<bean id="ch13Service5" class="com.mycompany.webapp.service.Ch13Service5">
 		<constructor-arg index="0" value="${service.prop1}"/>
 		<constructor-arg index="1" value="${service.prop2}"/>

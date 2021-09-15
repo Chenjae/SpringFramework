@@ -7,7 +7,8 @@
 		글 수정
 	</div>
 	<div class="card-body">
-		<form id="boardUpdateForm" method="post" action="boardUpdate">
+		<form id="boardUpdateForm" method="post" action="boardUpdate">j
+		   <input type="hidden" name="bno" value="${board.bno}"/>
 		   <!-- <table style="width:auto" class="table table-sm table-bordered"> -->
 		   <div class="input-group">
 		      <div class="input-group-prepend"><span class="input-group-text">btitle</span></div>
