@@ -1,9 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
 <table class="table table-sm table-bordered">  
-   <tr>
+   <tr class="thead-dark">
       <th class="col-sm-2">번호</th>
       <th class="col-sm-5">제목</th>
       <th class="col-sm-3">글쓴이</th>

@@ -34,6 +34,11 @@
 				프로그래밍 방식
 			</div>
 			<div class="card-body">
+				<c:if test="${transferError != null}">
+					<div class="alert alert-danger mb-2" role="alert">
+					  ${transferError}
+					</div>
+				</c:if>
 				  <form id="accountTransferForm1" method="post" action="transaction1">
                      <table style="width:auto" class="table table-sm table-bordered">
                         <tr>

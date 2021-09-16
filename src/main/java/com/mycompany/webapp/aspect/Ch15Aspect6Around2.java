@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Aspect
-@Order(2)
+@Order(1)
 public class Ch15Aspect6Around2 {
 	private static final Logger logger = LoggerFactory.getLogger(Ch15Aspect6Around2.class);
 
