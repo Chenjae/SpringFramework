@@ -4,7 +4,7 @@
 
 <div class="card m-2">
 	<div class="card-header">
-		계좌 번호 오류
+		계좌 잔액 부족
 	</div>
 	<div class="card-body">
 		${error}

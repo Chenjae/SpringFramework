@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- 인증 절차가 필요없는 경로 설정, (보안 필터 체인을 적용하지 않는 요청 경로)
+		보안 필터 체인 설정보다 먼저 설정해야한다 
+		/resources 밑의 모든 경로-->
+	<security:http pattern="/resources/**" security="none"/>
+	
+	<!-- 인증 절차를 설정 -->
+	<security:http>
+		<!-- 인증 방식 설정 : Form 인증 방식 -->
+		<!-- Form의 경로, ID와 PASSWORD의 param명, 로그인 성공시 처리 -->
+		<security:form-login 
+			login-page="/ch17/loginForm"	
+			username-parameter="mid"		
+			password-parameter="mpassword"
+			login-processing-url="/login"	
+			authentication-success-handler-ref="authenticationSuccessHandler"
+			authentication-failure-handler-ref="authenticationFailureHandler"
+			/>
+		<!--
+			로그인 성공, 실패시 경로 지정 
+			always-use-default-target="false" : 성공시 url 사용 여부
+			default-target-url="/" : 성공시 URL
+			authentication-failure-url="/ch17/loginForm" : 실패시 URL
+		-->	
+			
+			
+		<!-- 로그아웃 설정 
+		logout-success-url="/ch17/content"
+		-->	
+		<security:logout 
+			logout-url="/logout"
+			success-handler-ref="logoutSuccessHandler"/>
+		
+		<!-- 사이트간 요청 위조 방지 비활성화 -->
+		<!-- 활성화시킬 경우, 로그인/로그아웃은 post방식으로만 진행되어야 한다. -->
+		<!-- _csrf의 토큰을 전달해야함 -->
+		<security:csrf disabled="false"/>
+		
+		<!-- 요청 URL 권한 설정 -->
+		<!-- 인증(로그인)한 모든 사용자 : isAuthenticated() -->
+		<security:intercept-url pattern="/ch17/admin*" access="hasRole('ROLE_ADMIN')"/>
+		<security:intercept-url pattern="/ch17/manager*" access="hasRole('ROLE_MANAGER')"/>
+		<security:intercept-url pattern="/ch17/user*" access="isAuthenticated()"/>
+		<!-- 위의 경로를 제외한 모든 경로는 인증 절차를 거치긴 하는데 통과
+			위의 security none과는 다르다
+		 -->
+		<security:intercept-url pattern="/**" access="permitAll"/>
+		
+		<!-- 권한 없음일 경우 보여줄 페이지 설정 -->
+		<!-- 권한 Error : 403 -->
+		<security:access-denied-handler error-page="/ch17/error403"/>
+		
+		<!-- 로그인 중복 방지를 위한 설정 -->
+		<security:session-management>
+			<!-- 
+				max-session : 최대 로그인 수
+				error-if-maximum-exceeded="true" : 다른 곳에서 로그인을 할 수 없음
+				expired-url : 인증이 무효화된 사용자가 이동하는 페이지
+			 -->
+			 
+			 <!-- 이전 로그인을 유효하게 판단 -->
+			 <!-- 
+			<security:concurrency-control max-sessions="1"
+											error-if-maximum-exceeded="true"/>
+			 -->
+			 <!-- 최종 로그인을 유효하게 만들기 -->
+			 <security:concurrency-control max-sessions="1"
+											error-if-maximum-exceeded="false"
+											expired-url="/ch17/loginForm"/>
+		</security:session-management>
+		
+	</security:http>
+	
+	<!-- 권한 계층 설정 -->
+	<!-- security:http 밖에 선언 -->
+	<bean id="roleHierarchyImpl"
+		  class="org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl">
+		  <property name="hierarchy">
+		  	<value>
+		  		ROLE_ADMIN > ROLE_MANAGER
+		  		ROLE_MANAGER > ROLE_USER	
+		  	</value>
+		  </property>
+	</bean>
+	<bean id="roleHierarchyAuthoritiesMapper"
+		class="org.springframework.security.access.hierarchicalroles.RoleHierarchyAuthoritiesMapper">
+		<constructor-arg ref="roleHierarchyImpl"/>	
+	</bean>
+	
+	<!-- 인증 관리자 설정 (아이디와 패스워드를 DB와 비교해서 로그인 처리 관리) -->
+	<security:authentication-manager>
+		<security:authentication-provider ref="daoAuthenticationProvider"/>
+	</security:authentication-manager>
+	
+	<bean id="daoAuthenticationProvider"
+		class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+		<property name="userDetailsService" ref="jdbcUserService"/>
+		<property name="authoritiesMapper" ref="roleHierarchyAuthoritiesMapper"/>
+	</bean>
+	
+	<!-- mid와 mpassword, menabled, mrole 정보 가져오기 -->
+	<!-- role이 여러개 있을 수 있기 때문에 authorities-by-username-query가 별도로 있다 -->
+	<security:jdbc-user-service id="jdbcUserService"
+								data-source-ref="dataSource"
+								users-by-username-query="SELECT mid, mpassword, menabled FROM member WHERE mid=?"
+								authorities-by-username-query="SELECT mid, mrole FROM member WHERE mid=?"	/>
+
+	<!-- 로그인 성공/실패시 작동되는 클래스 bean 등록 -->
+	<bean id="authenticationSuccessHandler" 
+		class="com.mycompany.webapp.security.Ch17AuthenticationSuccessHandler">
+	 	<!-- 로그인 성공 후 리다이렉트로 이동할 경로 -->	
+		<property name="defaultTargetUrl" value="/"/>
+		<!-- 로그인 성공 후 이동할 Url 항상 사용할지 -->
+		<property name="alwaysUseDefaultTargetUrl" value="false"/>
+	</bean>
+	
+	<!-- defaultFailureUrl : 인증 실패시 url  -->
+	<bean id="authenticationFailureHandler" 
+		class="com.mycompany.webapp.security.Ch17AuthenticationFailureHandler">
+		<!-- <property name="useForward" value="true"/> -->
+		<!--  리다이렉트로 페이지를 이동 -->
+		<property name="defaultFailureUrl" value="/ch17/loginForm"/>	
+	</bean>
+	
+	<bean id="logoutSuccessHandler"
+		class="com.mycompany.webapp.security.Ch17LogoutSuccessHandler">	
+		<property name="defaultTargetUrl" value="/ch17/content"/>	
+	</bean>
+</beans>

@@ -51,6 +51,14 @@ public class Ch10ExceptionHandler {
 		return "error/notFoundAccountException";
 	}
 	
+	@ExceptionHandler
+	public String handleCh16NotEnoughBalanceException(Ch16NotEnoughBalanceException e, Model model) {
+		logger.info("실행");
+		e.printStackTrace();
+		model.addAttribute("error", e.getMessage());
+		return "error/notEnoughBalanceException";
+	}
+	
 	//Exception과 RuntimeException 차이
 	@ExceptionHandler
 	public String handleOtherException(Exception e) {

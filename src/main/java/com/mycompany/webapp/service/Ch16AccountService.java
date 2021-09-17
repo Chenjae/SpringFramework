@@ -14,6 +14,7 @@ import org.springframework.transaction.support.TransactionTemplate;
 
 import com.mycompany.webapp.dao.Ch16AccountDao;
 import com.mycompany.webapp.dto.Ch16Account;
+import com.mycompany.webapp.exception.Ch16NotEnoughBalanceException;
 import com.mycompany.webapp.exception.Ch16NotFoundAccountException;
 
 @Service
@@ -23,7 +24,8 @@ public class Ch16AccountService {
 	public enum TransferResult {
 		SUCCESS,
 		FAIL_NOT_FOUND_ACCOUNT,
-		FAIL_NOT_ENOUGH_BALANCE
+		FAIL_NOT_ENOUGH_BALANCE,
+		FAIL
 	}
 	
 	@Resource
@@ -38,9 +40,9 @@ public class Ch16AccountService {
 	@Resource
 	private TransactionTemplate transactionTemplate;
 	
+	//프로그래밍 방식
 	public TransferResult transfer1(int fromAno, int toAno, int amount) {
 		logger.info("실행");
-		
 		//transactionTemplate을 이용
 		//transaction.execute : 내부적으로 Transaction 작업 준비, 시간이 걸린다.
 		//따라서 Callback을 등록해서 작업 준비가 끝나면 등록한 메서드를 실행하게 한다.
@@ -52,14 +54,30 @@ public class Ch16AccountService {
 				try {
 					//출금하기
 					Ch16Account fromAccount = accountDao.selectByAno(fromAno);
+					if(fromAccount == null) {
+						throw new Ch16NotFoundAccountException("출금 계좌가 없습니다");
+					}
+					if(fromAccount.getBalance()-amount < 0) {
+						throw new Ch16NotEnoughBalanceException("출금 계좌에 잔액이 부족합니다");
+					}
 					fromAccount.setBalance(fromAccount.getBalance()-amount);
 					accountDao.updateBalance(fromAccount);
 					
 					//예금하기
 					Ch16Account toAccount = accountDao.selectByAno(toAno);
+					if(toAccount == null) {
+						throw new Ch16NotFoundAccountException("입금 계좌가 없습니다");
+					}
 					toAccount.setBalance(toAccount.getBalance()+amount);
+					
 					accountDao.updateBalance(toAccount);
 					return "success";
+				} catch(Ch16NotFoundAccountException e) {
+					status.setRollbackOnly();
+					return "notFoundAccount";
+				} catch(Ch16NotEnoughBalanceException e) {
+					status.setRollbackOnly();
+					return "notEnoughBalance";
 				} catch(Exception e) {
 					//트랜잭션 작업을 모두 취소
 					status.setRollbackOnly();
@@ -70,12 +88,16 @@ public class Ch16AccountService {
 		
 		if(result.equals("success")) {
 			return TransferResult.SUCCESS;
-		} else {
+		} else if(result.equals("notFoundAccount")) {
 			return TransferResult.FAIL_NOT_FOUND_ACCOUNT;
-			//throw new Ch16NotFoundAccountException("계좌가 존재하지 않습니다");
+		} else if(result.equals("notEnoughBalance")) {
+			return TransferResult.FAIL_NOT_ENOUGH_BALANCE;
+		} else {
+			return TransferResult.FAIL;
 		}
 	}
 	
+	//선언적 방식
 	//@Transactional에서 롤백시키기 위해서는 반드시 RuntimeException을 발생시켜줘야한다.
 	//따라서, Controller에서 예외 발생시 정상적으로 작동할 수 없기 때문에 ExceptionHandler를 작성해줘야한다.
 	//예외 발생하지 않고 Service를 작성하기 위해서는 프로그래밍적 방식을 사용해아한다.
@@ -86,17 +108,24 @@ public class Ch16AccountService {
 		try {
 			//출금하기
 			Ch16Account fromAccount = accountDao.selectByAno(fromAno);
+			if(fromAccount == null) {
+				throw new Ch16NotFoundAccountException("출금 계좌가 없습니다");
+			}
+			if(fromAccount.getBalance()-amount < 0) {
+				throw new Ch16NotEnoughBalanceException("출금 계좌에 잔액이 부족합니다");
+			}
 			fromAccount.setBalance(fromAccount.getBalance()-amount);
 			accountDao.updateBalance(fromAccount);
 			
 			//예금하기
 			Ch16Account toAccount = accountDao.selectByAno(toAno);
+			if(toAccount == null) {
+				throw new Ch16NotFoundAccountException("입금 계좌가 없습니다");
+			}
 			toAccount.setBalance(toAccount.getBalance()+amount);
 			accountDao.updateBalance(toAccount);
 		} catch(Exception e) {
-			throw new Ch16NotFoundAccountException("계좌가 존재하지 않습니다");
+			throw e;
 		}
 	}
-	
-	
 }

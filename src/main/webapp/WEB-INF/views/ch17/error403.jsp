@@ -4,10 +4,10 @@
 
 <div class="card m-2">
 	<div class="card-header">
-		계좌 번호 오류
+		권한 불충분
 	</div>
 	<div class="card-body">
-		${error}
+		현재 로그인한 정보로 해당 페이지를 볼 수 없습니다.
 	</div>
 </div>
 

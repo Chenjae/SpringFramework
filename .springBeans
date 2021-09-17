@@ -15,8 +15,13 @@
 		<config>src/main/resources/spring/dispatcher/ch13_di.xml</config>
 		<config>src/main/resources/spring/root/ch14_datasource.xml</config>
 		<config>src/main/resources/spring/root/ch16_transaction.xml</config>
+		<config>src/main/resources/spring/root/ch17_security.xml</config>
 	</configs>
 	<autoconfigs>
+		<config>src/main/resources/spring/dispatcher/ch01_component_scan.xml</config>
+		<config>src/main/resources/spring/root/ch04_messagesource.xml</config>
+		<config>src/main/resources/spring/dispatcher/ch15_aop.xml</config>
+		<config>src/main/resources/spring/root/ch14_mybatis.xml</config>
 	</autoconfigs>
 	<configSets>
 	</configSets>

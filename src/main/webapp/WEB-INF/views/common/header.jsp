@@ -4,6 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <!DOCTYPE html>
 <html>
@@ -34,12 +35,23 @@
             </a>
             <div>
                <div>
-               	  <c:if test="${sessionMid == null}">
+               	  <%-- <c:if test="${sessionMid == null}">
                   	<a class="btn btn-success btn-sm" href="${pageContext.request.contextPath}/ch08/login">로그인</a>
                   </c:if>
                   <c:if test="${sessionMid != null}">
                   	<a class="btn btn-success btn-sm" href="${pageContext.request.contextPath}/ch08/logout">로그아웃</a>
-                  </c:if>
+                  </c:if> --%>
+                  
+                <sec:authorize access="isAnonymous()">
+					<a href="${pageContext.request.contextPath}/ch17/loginForm" class="btn btn-success btn-sm">로그인</a>
+				</sec:authorize>
+				<sec:authorize access="isAuthenticated()">
+					<%-- <a href="${pageContext.request.contextPath}/logout" class="btn btn-success btn-sm">로그아웃</a> --%>
+					<form method="post" action="${pageContext.request.contextPath}/logout">
+						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+						<button class="btn btn-success btn-sm">로그아웃</button>
+					</form>
+				</sec:authorize>
                </div>
             </div>
          </nav>
