@@ -132,4 +132,5 @@
 		class="com.mycompany.webapp.security.Ch17LogoutSuccessHandler">	
 		<property name="defaultTargetUrl" value="/ch17/content"/>	
 	</bean>
+	
 </beans>
